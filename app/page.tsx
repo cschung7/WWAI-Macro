@@ -4,12 +4,15 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { translations, countries, Lang } from './translations'
 
+// Server IP - Change this for failover (96 = Primary, 97 = Backup)
+const SERVER_IP = '163.239.155.96'
+
 // Local VAR Dashboard (GraphEconCast with VAR model)
 // Features: Investment Dashboard, Full VAR (Diebold-Yilmaz Spillover, BMA, Regime Switching)
-const VAR_DASHBOARD = 'http://163.239.155.96:8012'
+const VAR_DASHBOARD = `http://${SERVER_IP}:8012`
 // Local GNN Dashboard (GraphEconCast with GNN model)
 // Features: GNN-based spillover analysis, message passing visualization
-const GNN_DASHBOARD = 'http://163.239.155.96:3789'
+const GNN_DASHBOARD = `http://${SERVER_IP}:3789`
 // Cache-busting version - increment when dashboard JS changes
 const CACHE_VERSION = 'v4'
 
