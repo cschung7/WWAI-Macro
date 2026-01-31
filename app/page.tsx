@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { translations, countries, Lang } from './translations'
 
 // Server IP - Change this for failover (96 = Primary, 97 = Backup)
-const SERVER_IP = '163.239.155.96'
+const SERVER_IP = '163.239.155.97'
 
 // Local VAR Dashboard (GraphEconCast with VAR model)
 // Features: Investment Dashboard, Full VAR (Diebold-Yilmaz Spillover, BMA, Regime Switching)
