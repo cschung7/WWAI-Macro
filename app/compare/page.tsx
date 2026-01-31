@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import { translations, countries, Lang } from '../translations'
 
-const GNN_API = 'http://localhost:8005'
+const GNN_API = process.env.NEXT_PUBLIC_GNN_API || 'https://wwai-gnn-api-production.up.railway.app'
 
 export default function ComparePage() {
   const [lang, setLang] = useState<Lang>('en')

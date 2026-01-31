@@ -4,9 +4,14 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { translations, countries, Lang } from './translations'
 
-// API endpoints configuration
-const VAR_API = 'http://localhost:8012'  // Korea HRM VAR
-const GNN_API = 'http://localhost:8005'  // WWAI-GNN
+// Local VAR Dashboard (GraphEconCast with VAR model)
+// Features: Investment Dashboard, Full VAR (Diebold-Yilmaz Spillover, BMA, Regime Switching)
+const VAR_DASHBOARD = 'http://163.239.155.96:8012'
+// Local GNN Dashboard (GraphEconCast with GNN model)
+// Features: GNN-based spillover analysis, message passing visualization
+const GNN_DASHBOARD = 'http://163.239.155.96:3789'
+// Cache-busting version - increment when dashboard JS changes
+const CACHE_VERSION = 'v4'
 
 export default function LandingPage() {
   const [lang, setLang] = useState<Lang>('en')
@@ -24,12 +29,9 @@ export default function LandingPage() {
   }
 
   const handleRunBoth = () => {
-    // Open both dashboards in new tabs with the scenario parameters
-    const gnnUrl = `http://localhost:3789/spillovers?country=${shockCountry}&variable=${shockVariable}&magnitude=${shockMagnitude}&lang=${lang}`
-    const varUrl = `http://localhost:8012/?shock_country=${shockCountry}&shock_variable=${shockVariable}&shock_magnitude=${shockMagnitude}`
-
-    window.open(gnnUrl, '_blank')
-    window.open(varUrl, '_blank')
+    // Open main dashboard with shock simulator parameters
+    const dashboardUrl = `${VAR_DASHBOARD}/?${CACHE_VERSION}&country=${shockCountry}&variable=${shockVariable}&magnitude=${shockMagnitude}`
+    window.open(dashboardUrl, '_blank')
   }
 
   return (
@@ -50,7 +52,7 @@ export default function LandingPage() {
           <nav className="flex items-center gap-6">
             <Link href="/" className="text-slate-300 hover:text-white transition-colors text-sm">{t.nav.home}</Link>
             <Link href="/compare" className="text-slate-300 hover:text-white transition-colors text-sm">{t.nav.compare}</Link>
-            <a href="http://localhost:3789" target="_blank" className="text-slate-300 hover:text-white transition-colors text-sm">{t.nav.gnn}</a>
+            <a href={`${GNN_DASHBOARD}/spillovers`} target="_blank" className="text-slate-300 hover:text-white transition-colors text-sm">{t.nav.gnn}</a>
             <div className="flex gap-1 bg-slate-800 rounded-lg p-1">
               <button
                 onClick={() => setLang('en')}
@@ -90,55 +92,152 @@ export default function LandingPage() {
 
       {/* Model Cards */}
       <section className="py-12 px-4">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
-          {/* VAR Card */}
+        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+          {/* GraphEconCast Investment Dashboard Card */}
           <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-8 hover:border-amber-500/50 transition-all">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-8 hover:border-purple-500/50 transition-all">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
-                  <span className="text-2xl">📈</span>
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                  <span className="text-2xl">📊</span>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-white">{t.varModel.title}</h3>
-                  <p className="text-amber-400">{t.varModel.subtitle}</p>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-2xl font-bold text-white">
+                      {lang === 'en' ? 'Investment Dashboard' : '투자 대시보드'}
+                    </h3>
+                    <span className="px-2 py-0.5 text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-full">
+                      Local
+                    </span>
+                  </div>
+                  <p className="text-purple-400">
+                    {lang === 'en' ? 'Risk Analytics + Commodity Regime' : '리스크 분석 + 원자재 레짐'}
+                  </p>
                 </div>
               </div>
 
-              <p className="text-slate-300 mb-6">{t.varModel.description}</p>
+              <p className="text-slate-300 mb-6">
+                {lang === 'en'
+                  ? 'ML-powered commodity regime classification, VKOSPI analysis, and cross-asset equity signals. Requires NAS file access.'
+                  : 'ML 기반 원자재 레짐 분류, VKOSPI 분석, 크로스 에셋 주식 신호. NAS 파일 접근 필요.'}
+              </p>
 
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <div className="bg-slate-900/50 rounded-lg p-3 text-center">
-                  <div className="text-amber-400 font-mono text-sm">{t.varModel.stats.variables}</div>
+                  <div className="text-purple-400 font-mono text-sm">
+                    {lang === 'en' ? '4 Regimes' : '4 레짐'}
+                  </div>
                 </div>
                 <div className="bg-slate-900/50 rounded-lg p-3 text-center">
-                  <div className="text-amber-400 font-mono text-sm">{t.varModel.stats.lag}</div>
+                  <div className="text-purple-400 font-mono text-sm">VKOSPI</div>
                 </div>
                 <div className="bg-slate-900/50 rounded-lg p-3 text-center">
-                  <div className="text-amber-400 font-mono text-sm">{t.varModel.stats.method}</div>
+                  <div className="text-purple-400 font-mono text-sm">
+                    {lang === 'en' ? 'Real-time' : '실시간'}
+                  </div>
                 </div>
               </div>
 
               <ul className="space-y-2 mb-6">
-                {t.varModel.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-2 text-slate-300">
-                    <span className="text-amber-400">+</span>
-                    {feature}
-                  </li>
-                ))}
+                <li className="flex items-center gap-2 text-slate-300">
+                  <span className="text-purple-400">+</span>
+                  {lang === 'en' ? 'Commodity Regime ML (Bull/Bear Quiet/Volatile)' : '원자재 레짐 ML (강세/약세 안정/변동)'}
+                </li>
+                <li className="flex items-center gap-2 text-slate-300">
+                  <span className="text-purple-400">+</span>
+                  {lang === 'en' ? "Korea's Fear Gauge (VKOSPI)" : '한국 공포지수 (VKOSPI)'}
+                </li>
+                <li className="flex items-center gap-2 text-slate-300">
+                  <span className="text-purple-400">+</span>
+                  {lang === 'en' ? 'Cross-Asset Equity Signals' : '크로스 에셋 주식 신호'}
+                </li>
+                <li className="flex items-center gap-2 text-slate-300">
+                  <span className="text-purple-400">+</span>
+                  {lang === 'en' ? 'Position Sizing Recommendations' : '포지션 사이징 추천'}
+                </li>
               </ul>
 
               <a
-                href="http://localhost:8012"
+                href={`${VAR_DASHBOARD}/dashboard?${CACHE_VERSION}`}
                 target="_blank"
-                className="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl text-center hover:from-amber-600 hover:to-orange-600 transition-all"
+                className="block w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl text-center hover:from-purple-600 hover:to-pink-600 transition-all"
+              >
+                {lang === 'en' ? 'Open Dashboard' : '대시보드 열기'} &rarr;
+              </a>
+            </div>
+          </div>
+
+          {/* VAR Card - Full Model (Local GraphEconCast) */}
+          <div className="group relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-amber-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-8 hover:border-amber-500/50 transition-all">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                  <span className="text-2xl">📈</span>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-2xl font-bold text-white">{t.varModel.title}</h3>
+                    <span className="px-2 py-0.5 text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-full">
+                      Local
+                    </span>
+                  </div>
+                  <p className="text-amber-400">{t.varModel.subtitle}</p>
+                </div>
+              </div>
+
+              <p className="text-slate-300 mb-6">
+                {lang === 'en'
+                  ? 'Full VAR model with Diebold-Yilmaz Spillover Index, Bayesian Model Averaging, and Regime Switching. Requires NAS file access.'
+                  : '전체 VAR 모델: Diebold-Yilmaz 파급효과 지수, 베이지안 모델 평균, 레짐 스위칭. NAS 파일 접근 필요.'}
+              </p>
+
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="bg-slate-900/50 rounded-lg p-3 text-center">
+                  <div className="text-amber-400 font-mono text-sm">
+                    {lang === 'en' ? 'Spillover' : '파급효과'}
+                  </div>
+                </div>
+                <div className="bg-slate-900/50 rounded-lg p-3 text-center">
+                  <div className="text-amber-400 font-mono text-sm">BMA</div>
+                </div>
+                <div className="bg-slate-900/50 rounded-lg p-3 text-center">
+                  <div className="text-amber-400 font-mono text-sm">
+                    {lang === 'en' ? 'Regime' : '레짐'}
+                  </div>
+                </div>
+              </div>
+
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center gap-2 text-slate-300">
+                  <span className="text-amber-400">+</span>
+                  {lang === 'en' ? 'Diebold-Yilmaz Spillover Index' : 'Diebold-Yilmaz 파급효과 지수'}
+                </li>
+                <li className="flex items-center gap-2 text-slate-300">
+                  <span className="text-amber-400">+</span>
+                  {lang === 'en' ? 'Bayesian Model Averaging (6 models)' : '베이지안 모델 평균 (6개 모델)'}
+                </li>
+                <li className="flex items-center gap-2 text-slate-300">
+                  <span className="text-amber-400">+</span>
+                  {lang === 'en' ? 'Markov Regime Switching' : '마코프 레짐 스위칭'}
+                </li>
+                <li className="flex items-center gap-2 text-slate-300">
+                  <span className="text-amber-400">+</span>
+                  {lang === 'en' ? 'Structural Shock Identification' : '구조적 충격 식별'}
+                </li>
+              </ul>
+
+              <a
+                href={`${VAR_DASHBOARD}/?${CACHE_VERSION}#shock-simulator`}
+                target="_blank"
+                className="block w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl text-center hover:from-amber-600 hover:to-amber-700 transition-all"
               >
                 {t.varModel.cta} &rarr;
               </a>
             </div>
           </div>
 
-          {/* GNN Card */}
+          {/* GNN Card - Local GraphEconCast */}
           <div className="group relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-8 hover:border-blue-500/50 transition-all">
@@ -147,12 +246,21 @@ export default function LandingPage() {
                   <span className="text-2xl">🕸️</span>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-white">{t.gnnModel.title}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-2xl font-bold text-white">{t.gnnModel.title}</h3>
+                    <span className="px-2 py-0.5 text-xs font-semibold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full">
+                      Local
+                    </span>
+                  </div>
                   <p className="text-cyan-400">{t.gnnModel.subtitle}</p>
                 </div>
               </div>
 
-              <p className="text-slate-300 mb-6">{t.gnnModel.description}</p>
+              <p className="text-slate-300 mb-6">
+                {lang === 'en'
+                  ? 'Graph Neural Network for economic spillover analysis. Multi-hop message passing captures complex cross-country dynamics. Requires NAS file access.'
+                  : '경제 파급효과 분석을 위한 그래프 신경망. 멀티홉 메시지 패싱으로 복잡한 국가간 역학 포착. NAS 파일 접근 필요.'}
+              </p>
 
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <div className="bg-slate-900/50 rounded-lg p-3 text-center">
@@ -176,7 +284,7 @@ export default function LandingPage() {
               </ul>
 
               <a
-                href="http://localhost:3789/spillovers"
+                href={`${GNN_DASHBOARD}/spillovers`}
                 target="_blank"
                 className="block w-full py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-xl text-center hover:from-blue-600 hover:to-cyan-600 transition-all"
               >
@@ -339,9 +447,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-4 text-slate-500 text-sm">
             <span>{t.footer.version}</span>
             <span>|</span>
-            <span>GNN API: localhost:8005</span>
-            <span>|</span>
-            <span>VAR API: localhost:8012</span>
+            <span>All Models: Local (NAS)</span>
           </div>
         </div>
       </footer>
