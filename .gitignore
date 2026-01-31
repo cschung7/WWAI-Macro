@@ -24,3 +24,23 @@ npm-debug.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+
+# Data files
+*.pkl
+*.h5
+*.pt
+*.pth
+gnn/data/cache/
+gnn/data/checkpoints/
