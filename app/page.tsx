@@ -97,7 +97,7 @@ export default function LandingPage() {
       <section className="py-12 px-4">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
           {/* VAR Card - Full Model (Local GraphEconCast) */}
-          <div className="group relative">
+          <div className="group relative h-full">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-amber-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-10 hover:border-amber-500/50 transition-all min-h-[520px] flex flex-col">
               <div className="flex items-center gap-4 mb-6">
@@ -137,7 +137,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <ul className="space-y-3 mb-8 flex-grow">
+              <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-2 text-slate-300">
                   <span className="text-amber-400">+</span>
                   {lang === 'en' ? 'Diebold-Yilmaz Spillover Index' : 'Diebold-Yilmaz 파급효과 지수'}
@@ -159,7 +159,7 @@ export default function LandingPage() {
               <a
                 href={`${VAR_DASHBOARD}/?${CACHE_VERSION}#shock-simulator`}
                 target="_blank"
-                className="block w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl text-center hover:from-amber-600 hover:to-amber-700 transition-all"
+                className="block w-full py-3.5 mt-auto bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl text-center hover:from-amber-600 hover:to-amber-700 transition-all"
               >
                 {t.varModel.cta} &rarr;
               </a>
@@ -167,7 +167,7 @@ export default function LandingPage() {
           </div>
 
           {/* GNN Card - Local GraphEconCast */}
-          <div className="group relative">
+          <div className="group relative h-full">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-10 hover:border-blue-500/50 transition-all min-h-[520px] flex flex-col">
               <div className="flex items-center gap-4 mb-6">
@@ -203,7 +203,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <ul className="space-y-3 mb-8 flex-grow">
+              <ul className="space-y-3 mb-8">
                 {t.gnnModel.features.map((feature, i) => (
                   <li key={i} className="flex items-center gap-2 text-slate-300">
                     <span className="text-cyan-400">+</span>
@@ -215,7 +215,7 @@ export default function LandingPage() {
               <a
                 href={`${GNN_DASHBOARD}/spillovers`}
                 target="_blank"
-                className="block w-full py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-xl text-center hover:from-blue-600 hover:to-cyan-600 transition-all"
+                className="block w-full py-3.5 mt-auto bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-xl text-center hover:from-blue-600 hover:to-cyan-600 transition-all"
               >
                 {t.gnnModel.cta} &rarr;
               </a>
