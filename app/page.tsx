@@ -95,88 +95,14 @@ export default function LandingPage() {
 
       {/* Model Cards */}
       <section className="py-12 px-4">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
-          {/* GraphEconCast Investment Dashboard Card */}
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-8 hover:border-purple-500/50 transition-all">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                  <span className="text-2xl">📊</span>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-2xl font-bold text-white">
-                      {lang === 'en' ? 'Investment Dashboard' : '투자 대시보드'}
-                    </h3>
-                    <span className="px-2 py-0.5 text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-full">
-                      Local
-                    </span>
-                  </div>
-                  <p className="text-purple-400">
-                    {lang === 'en' ? 'Risk Analytics + Commodity Regime' : '리스크 분석 + 원자재 레짐'}
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-slate-300 mb-6">
-                {lang === 'en'
-                  ? 'ML-powered commodity regime classification, VKOSPI analysis, and cross-asset equity signals. Requires NAS file access.'
-                  : 'ML 기반 원자재 레짐 분류, VKOSPI 분석, 크로스 에셋 주식 신호. NAS 파일 접근 필요.'}
-              </p>
-
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="bg-slate-900/50 rounded-lg p-3 text-center">
-                  <div className="text-purple-400 font-mono text-sm">
-                    {lang === 'en' ? '4 Regimes' : '4 레짐'}
-                  </div>
-                </div>
-                <div className="bg-slate-900/50 rounded-lg p-3 text-center">
-                  <div className="text-purple-400 font-mono text-sm">VKOSPI</div>
-                </div>
-                <div className="bg-slate-900/50 rounded-lg p-3 text-center">
-                  <div className="text-purple-400 font-mono text-sm">
-                    {lang === 'en' ? 'Real-time' : '실시간'}
-                  </div>
-                </div>
-              </div>
-
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center gap-2 text-slate-300">
-                  <span className="text-purple-400">+</span>
-                  {lang === 'en' ? 'Commodity Regime ML (Bull/Bear Quiet/Volatile)' : '원자재 레짐 ML (강세/약세 안정/변동)'}
-                </li>
-                <li className="flex items-center gap-2 text-slate-300">
-                  <span className="text-purple-400">+</span>
-                  {lang === 'en' ? "Korea's Fear Gauge (VKOSPI)" : '한국 공포지수 (VKOSPI)'}
-                </li>
-                <li className="flex items-center gap-2 text-slate-300">
-                  <span className="text-purple-400">+</span>
-                  {lang === 'en' ? 'Cross-Asset Equity Signals' : '크로스 에셋 주식 신호'}
-                </li>
-                <li className="flex items-center gap-2 text-slate-300">
-                  <span className="text-purple-400">+</span>
-                  {lang === 'en' ? 'Position Sizing Recommendations' : '포지션 사이징 추천'}
-                </li>
-              </ul>
-
-              <a
-                href={`${VAR_DASHBOARD}/dashboard?${CACHE_VERSION}`}
-                target="_blank"
-                className="block w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl text-center hover:from-purple-600 hover:to-pink-600 transition-all"
-              >
-                {lang === 'en' ? 'Open Dashboard' : '대시보드 열기'} &rarr;
-              </a>
-            </div>
-          </div>
-
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
           {/* VAR Card - Full Model (Local GraphEconCast) */}
           <div className="group relative">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-amber-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-8 hover:border-amber-500/50 transition-all">
+            <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-10 hover:border-amber-500/50 transition-all min-h-[520px] flex flex-col">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
-                  <span className="text-2xl">📈</span>
+                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                  <span className="text-3xl">📈</span>
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -211,7 +137,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <ul className="space-y-2 mb-6">
+              <ul className="space-y-3 mb-8 flex-grow">
                 <li className="flex items-center gap-2 text-slate-300">
                   <span className="text-amber-400">+</span>
                   {lang === 'en' ? 'Diebold-Yilmaz Spillover Index' : 'Diebold-Yilmaz 파급효과 지수'}
@@ -233,7 +159,7 @@ export default function LandingPage() {
               <a
                 href={`${VAR_DASHBOARD}/?${CACHE_VERSION}#shock-simulator`}
                 target="_blank"
-                className="block w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl text-center hover:from-amber-600 hover:to-amber-700 transition-all"
+                className="block w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl text-center hover:from-amber-600 hover:to-amber-700 transition-all"
               >
                 {t.varModel.cta} &rarr;
               </a>
@@ -243,10 +169,10 @@ export default function LandingPage() {
           {/* GNN Card - Local GraphEconCast */}
           <div className="group relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-8 hover:border-blue-500/50 transition-all">
+            <div className="relative bg-slate-800/50 border border-slate-700 rounded-2xl p-10 hover:border-blue-500/50 transition-all min-h-[520px] flex flex-col">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                  <span className="text-2xl">🕸️</span>
+                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                  <span className="text-3xl">🕸️</span>
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -277,7 +203,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <ul className="space-y-2 mb-6">
+              <ul className="space-y-3 mb-8 flex-grow">
                 {t.gnnModel.features.map((feature, i) => (
                   <li key={i} className="flex items-center gap-2 text-slate-300">
                     <span className="text-cyan-400">+</span>
@@ -289,7 +215,7 @@ export default function LandingPage() {
               <a
                 href={`${GNN_DASHBOARD}/spillovers`}
                 target="_blank"
-                className="block w-full py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-xl text-center hover:from-blue-600 hover:to-cyan-600 transition-all"
+                className="block w-full py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-xl text-center hover:from-blue-600 hover:to-cyan-600 transition-all"
               >
                 {t.gnnModel.cta} &rarr;
               </a>
